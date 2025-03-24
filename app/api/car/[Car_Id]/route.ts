@@ -39,7 +39,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ Car_Id
 
 export async function DELETE(
   req: Request, 
-  { params }: { params: { Car_Id: string } }
+  { params }: { params: Promise<{ Car_Id: string }> }
 ) {
   try {
       const { userId } = await auth();
@@ -47,13 +47,15 @@ export async function DELETE(
           return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
       }
 
+      const { Car_Id } = await params;
+
       // Obtener el auto antes de eliminarlo
       const car = await db.car.findUnique({
-          where: { id: params.Car_Id, userId }
+        where: { id: Car_Id, userId }
       });
 
       if (!car) {
-          return NextResponse.json({ error: "Car not found" }, { status: 404 });
+        return NextResponse.json({ error: "Car not found" }, {status: 404 });
       }
 
       // Eliminar la imagen si existe
@@ -68,7 +70,7 @@ export async function DELETE(
 
       // Eliminar el auto de la base de datos
       const deletedCar = await db.car.delete({
-          where: { id: params.Car_Id, userId }
+          where: { id: Car_Id, userId }
       });
 
       return NextResponse.json({ success: true, deletedCar });
