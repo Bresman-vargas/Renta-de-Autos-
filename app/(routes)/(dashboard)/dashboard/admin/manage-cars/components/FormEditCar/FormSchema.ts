@@ -5,13 +5,12 @@ export const formSchema = z.object({
     cv: z.string().max(50),
     transmission: z.string().min(2).max(50),
     people: z.string().min(1),
-    photo: z.string().min(1, ""),
+    // photo: z.string().min(1, ""),
     priceDay: z.string().min(2).max(50),
     engine: z.string().min(2).max(50),
     type: z.string().min(2).max(50),
     isPublished: z.boolean()
 })
-
 export type Option = { value: string; label: string}
 // Option types for dropdowns
 export const transmissionTypes: Option[] = [
@@ -43,6 +42,6 @@ export const carTypes: Option[] = [
     { value: "crossover", label: "Crossover" }
 ]
 
-// Image upload constants
-export const MAX_FILE_SIZE = 1 * 1024 * 1024 // 1MB
-export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]
+// // Image upload constants
+// export const MAX_FILE_SIZE = 1 * 1024 * 1024 // 1MB
+// export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"]

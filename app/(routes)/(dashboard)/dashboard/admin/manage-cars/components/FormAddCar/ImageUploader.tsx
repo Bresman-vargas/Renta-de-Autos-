@@ -70,61 +70,52 @@ export function ImageUploader({ form, previewUrl, setPreviewUrl, currentImagePat
     }
 
     const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0]
-        if (!file) return
+        const file = event.target.files?.[0];
+        if (!file) return;
     
-        setImageError(null)
-        setIsUploading(true)
+        setImageError(null);
+        setIsUploading(true);
     
         try {
             if (!validateFile(file)) {
-                setIsUploading(false)
-                return
+                setIsUploading(false);
+                return;
             }
-
-            await deleteImage()
-
-            const fileExt = file.name.split('.').pop()
-            const fileName = `${uuidv4()}.${fileExt}`
-            const filePath = `cars/${fileName}`
     
-            const { error } = await supabase.storage
-                .from('car')
-                .upload(filePath, file, {
-                    cacheControl: '3600',
-                    upsert: false
-                })
+            await deleteImage();
+    
+            const fileExt = file.name.split(".").pop();
+            const fileName = `${uuidv4()}.${fileExt}`;
+            const filePath = `cars/${fileName}`;
+    
+            const { error } = await supabase.storage.from("car").upload(filePath, file, {
+                cacheControl: "3600",
+                upsert: false,
+            });
     
             if (error) {
-                console.error("Upload failed:", error)
-                toast.error(`Failed to upload image: ${error.message}`)
-                return
+                console.error("Upload failed:", error);
+                toast.error(`Failed to upload image: ${error.message}`);
+                return;
             }
     
-            const { data: urlData } = supabase.storage
-                .from('car')
-                .getPublicUrl(filePath, {
-                    transform: {
-                        width: 1200,     
-                        height: 800,     
-                        quality: 80, 
-                    }
-                })
+            // 🚀 Aquí corregimos la URL sin aplicar transformaciones
+            const { data } = supabase.storage.from("car").getPublicUrl(filePath);
+            const imageUrl = data.publicUrl;
     
-            const imageUrl = urlData.publicUrl
-            form.setValue("photo", imageUrl, { shouldValidate: true })
-            setPreviewUrl(imageUrl)
-            setCurrentImagePathState(filePath)
-            setCurrentImagePath(filePath)
-
-            toast.success("Image uploaded successfully!")
+            form.setValue("photo", imageUrl, { shouldValidate: true });
+            setPreviewUrl(imageUrl);
+            setCurrentImagePathState(filePath);
+            setCurrentImagePath(filePath);
+    
+            toast.success("Image uploaded successfully!");
         } catch (error) {
-            console.error("Error uploading file:", error)
-            toast.error("Failed to upload image")
+            console.error("Error uploading file:", error);
+            toast.error("Failed to upload image");
         } finally {
-            setIsUploading(false)
+            setIsUploading(false);
         }
-    }
+    };
 
     return (
         <FormField
@@ -137,12 +128,12 @@ export function ImageUploader({ form, previewUrl, setPreviewUrl, currentImagePat
                         {previewUrl ? (
                             <div className="flex relative h-35">
                                 <div className="flex items-center h-full">
-                                    <Image  
-                                        src={previewUrl} 
-                                        alt="Car preview" 
-                                        width={70}
-                                        height={35}
-                                        className="w-[100px] h-[35px] object-cover"
+                                    <Image 
+                                        src={previewUrl ?? "https://placehold.co/400"} 
+                                        alt={previewUrl} 
+                                        width={70} 
+                                        height={35} 
+                                        className="w-[80px] h-[35px] object-cover"
                                     />
                                 </div>
                                 <Button 

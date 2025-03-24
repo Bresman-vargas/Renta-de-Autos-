@@ -11,13 +11,15 @@ import {
     DialogTitle
 
 } from '@/components/ui/dialog'
-import { FormEditCar } from './FormEditCar'
+// import { FormEditCar } from './FormEditCar'
 
+import { FormEditCar } from './FormEditCar/FormDeleteCar'
 interface CardCarProps {
   carData: Car
 }
 export function ButtonEditCar(props: CardCarProps) {
     const {carData} = props
+    console.log(carData)
     const [isOpenDialog, setIsOpenDialog] = useState(false)
   return (
     <Dialog open={isOpenDialog} onOpenChange={setIsOpenDialog}>
