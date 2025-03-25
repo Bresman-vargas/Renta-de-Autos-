@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/dialog'
 // import { FormEditCar } from './FormEditCar'
 
-import { FormEditCar } from './FormEditCar/FormDeleteCar'
+import { FormEditCar } from './FormEditCar/FormEditCar'
 interface CardCarProps {
   carData: Car
 }

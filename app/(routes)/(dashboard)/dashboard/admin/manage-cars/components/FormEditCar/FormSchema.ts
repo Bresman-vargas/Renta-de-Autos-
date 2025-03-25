@@ -8,8 +8,7 @@ export const formSchema = z.object({
     // photo: z.string().min(1, ""),
     priceDay: z.string().min(2).max(50),
     engine: z.string().min(2).max(50),
-    type: z.string().min(2).max(50),
-    isPublished: z.boolean()
+    type: z.string().min(2).max(50)
 })
 export type Option = { value: string; label: string}
 // Option types for dropdowns

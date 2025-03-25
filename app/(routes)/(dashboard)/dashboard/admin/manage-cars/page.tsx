@@ -15,7 +15,6 @@ export default async function ManageCars() {
   const car = await db.car.findMany({
     where : {
       userId,
-      // userId: String(userId),
     },
     orderBy : {
       createdAt : "desc"

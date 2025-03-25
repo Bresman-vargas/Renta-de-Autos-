@@ -44,7 +44,7 @@ export function CardCar({ car, className = "" }: CardCarProps) {
   return (
     <article className={`${className}`}>
         <header>
-            {!car.isPublished ? 
+            {!isPublished ? 
             <div className="h-5 bg-destructive text-destructive-foreground text-center flex items-center justify-center text-xs rounded-t-lg">
                 <p>Not published</p>
             </div> : 
