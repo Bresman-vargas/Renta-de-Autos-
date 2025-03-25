@@ -42,8 +42,7 @@ export function FormEditCar({setOpenDialog, carData}: FormEditCarProps) {
             // photo: "",
             priceDay: carData.priceDay,
             engine: carData.engine,
-            type: carData.type,
-            isPublished: false
+            type: carData.type
         }
     })
 
